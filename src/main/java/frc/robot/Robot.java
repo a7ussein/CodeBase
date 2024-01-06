@@ -13,7 +13,7 @@ import frc.robot.autonomous.DoNothing;
 public class Robot extends TimedRobot {
     // Auto Selection:
     private static final String kDefaultAuto = "Nothing Auto";
-    private static final String kDepositAndDriveForward = "Mobility";
+    private static final String kdriveForward = "Mobility";
   
     private final SendableChooser<String> auto_chooser = new SendableChooser<>();
     private Components components = new Components();
@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Auto Selection:
     auto_chooser.setDefaultOption("Nothing Auto", kDefaultAuto);
-    auto_chooser.addOption("Mobility", kDepositAndDriveForward);
+    auto_chooser.addOption("Mobility", kdriveForward);
     SmartDashboard.putData("Auto choices", auto_chooser);
     
     // all components inilizations are in the components.java file  
@@ -38,7 +38,7 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         // Auto Stuff:
         switch (auto_chooser.getSelected()) {
-            case kDepositAndDriveForward:
+            case kdriveForward:
                 autonomous = new driveForward(components);
             break;
             case kDefaultAuto:
