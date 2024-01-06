@@ -1,0 +1,56 @@
+This code base is a development of Jeremy and Me for the 2023 in order to have a cleaner and an easier
+way of creating autos and write code for newer components.
+This code base already has a driveTrain code written in it but if you want to understand how it was created here are the instructions
+
+in order to code a Tank drivetrain in this codebase you will have to do the following:
+    1. Go to the Components.java file
+            - define your controllers using the xboxController class
+                ex:
+                    public XboxController driverController = new XboxController(0);
+            - define all of your motors as public
+                ex:
+                    public CANSparkMax leftFrontMotor = new CANSparkMax(2, CANSparkMaxLowLevel.MotorType.kBrushless);
+            - put them in two MotorControllerGroup, one for the right motors and the other for the left ones
+                ex:
+                    public MotorControllerGroup leftMotors = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
+            - define your two front encoders
+                ex:
+                    public RelativeEncoder leftEncoder = leftFrontMotor.getEncoder();
+            - define your DifferentialDrive class and pass the two MotorControllerGroups to it
+                ex:
+                    public DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors)
+            - now that you defined all of the components, you need to write the code that will handle them as soon as the robot is turned one
+            in order to do that I've created a function inside the components file called init() and that funtion is called in the Robot.java robotInit() function
+            Examples of codes you would write in the init() function are:
+                
+                leftFrontMotor.restoreFactoryDefaults();
+                leftBackMotor.restoreFactoryDefaults();
+                rightFrontMotor.restoreFactoryDefaults();
+                rightBackMotor.restoreFactoryDefaults();
+                
+                rightControllerGroup.setInverted(true);
+                leftControllerGroup.setInverted(false);
+                
+                leftEncoder.setPosition(0);
+                rightEncoder.setPosition(0);
+
+
+Now all of the components for the drivetrain are defined and initalized, your next task is to tell the robot how to use them
+
+In order for you to be able to just plug in a controller and start moving the robot around, you need to map the buttons to specific tasks
+so you would do tht in the teleopPeriodic() function.
+
+    Example of code that maps buttons to specific tasks:
+        // drive controls
+        double Speed = -components.driveController.getRawAxis(1) * 0.9; // for this axis: up is negative, down is positive
+        double turn = -components.driveController.getRawAxis(4) * 0.44;
+        double vAngleTest = components.gyro.getYComplementaryAngle();
+        vAngleTest = vAngleTest * -1; // rio is mounted backwards
+
+        if (components.driveController.getRightBumper()) { // if the RightBumber is pressed then slow mode is going to be enabled
+          components.drive.arcadeDrive(Speed / 2, turn/2);
+        } else if (components.driveController.getLeftBumper()) { // if both right and left bumbers are pressed then ultra slow mode is going to be enabled
+          components.drive.arcadeDrive(0, 0);
+        } else {
+          components.drive.arcadeDrive(Speed, turn); // if the no button is pressed the "input ramping" is going to be on
+        }
