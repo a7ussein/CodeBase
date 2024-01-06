@@ -16,7 +16,6 @@ public abstract class AutonomousBase {
     public void init() {
         this.startTime = Timer.getFPGATimestamp();    
         components.leftEncoder.setPosition(0);
-        components.gyro.reset();
     }
 
     public void periodic() {
