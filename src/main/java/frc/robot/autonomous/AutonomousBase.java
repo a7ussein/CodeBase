@@ -7,8 +7,7 @@ public abstract class AutonomousBase {
     protected Components components;
     protected double startTime;
     protected double currentTime;
-    protected double targetRollerSpeed;
-
+    
     public AutonomousBase(Components components) {
         this.components = components;
     }

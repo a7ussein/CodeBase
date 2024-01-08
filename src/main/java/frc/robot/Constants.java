@@ -13,12 +13,4 @@ public class Constants {
         public static final SlewRateLimiter limiter = new SlewRateLimiter(1);
     }
 
-    public static class autoConstants {
-        public static final double Low = 0.5;
-
-        public static class shooting {
-            public static final double lowTargetSpeed = 0.5;
-            public static final double midTargetSpeed = 1;
-        }
-    }
 }

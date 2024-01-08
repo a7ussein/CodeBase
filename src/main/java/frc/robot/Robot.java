@@ -103,6 +103,5 @@ public class Robot extends TimedRobot {
         components.leftBackMotor.setIdleMode(dMotormode);
         components.rightFrontMotor.setIdleMode(dMotormode);
         components.rightBackMotor.setIdleMode(dMotormode);
-        // armMotor.setIdleMode(dMotormode);
     }
 }
